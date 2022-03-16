@@ -1,9 +1,9 @@
 class Grid:
-    rows = []
+    rows = None
     number_of_columns = 0
 
     def __init__(self, filepath): 
-        print("Hi")
+        self.rows = []  # can't set this outside the init function, as it's mutable
         with open(filepath, "r") as f:
             for row in f.readlines():
                 row_data = row.strip().split(" ")
@@ -24,7 +24,7 @@ class Grid:
                     r = row - i
                 yield self.rows[r][c]
             except IndexError:
-                raise ValueError(f"Row {c}, Col {c} out of range (overall grid size {len(self.number_of_columns)} x {len(self.rows)})")
+                raise ValueError(f"Row {c}, Col {c} out of range (overall grid size {self.number_of_columns} x {len(self.rows)})")
 
 
     def get_n_right(self, n: int):
