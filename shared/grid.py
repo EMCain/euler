@@ -10,7 +10,7 @@ class Grid:
                 if len(row_data) > self.number_of_columns:
                     # This doesn't really account for rows of varying length
                     # if we ever have to deal with them, it would be good to add some Null values to the end of shorter rows.
-                    self.number_of_columns == len(row_data)
+                    self.number_of_columns = len(row_data)
                 self.rows.append([int(num) for num in row_data])
 
     
@@ -52,6 +52,17 @@ class Grid:
             row = self.rows[r]
             for c in range(0, len(row) - offset):
                 yield tuple(self.diag_set(r, c, n, False))
+
+    def get_n_down(self, n: int): 
+        if n < 1:
+            raise ValueError("n must be at least 1")
+        offset = n - 1 
+        for r1 in range(0, len(self.rows) - offset):
+            for c in range(0, self.number_of_columns):
+                output = []
+                for r2 in range(0, n):
+                    output.append(self.rows[r1 + r2][c])
+                yield tuple(output)
 
 
     # next: implement similar methods for down, diagonal up, diagonal down 
